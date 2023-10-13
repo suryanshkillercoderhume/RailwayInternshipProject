@@ -5,24 +5,22 @@
 	$name = "";
 	$email = "";
 	$mobile = "";
-	$address = "";
-	$query = "select * from users where email = '$_SESSION[email]'";
+	$query = "select * from admins where email = '$_SESSION[email]'";
 	$query_run = mysqli_query($connection,$query);
 	while($row = mysqli_fetch_assoc($query_run)){
 		$name = $row['name'];
 		$email = $row['email'];
 		$mobile = $row['mobile'];
-		$address = $row['address'];
 	}
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>User Dashboard</title>
+	<title>Admin Dashboard</title>
 	<meta charset="utf-8" name="viewport" content="width=device-width,intial-scale=1">
-	<link rel="stylesheet" type="text/css" href="bootstrap-4.4.1/css/bootstrap.min.css">
-  	<script type="text/javascript" src="bootstrap-4.4.1/js/juqery_latest.js"></script>
-  	<script type="text/javascript" src="bootstrap-4.4.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../bootstrap-4.4.1/css/bootstrap.min.css">
+  	<script type="text/javascript" src="../bootstrap-4.4.1/js/juqery_latest.js"></script>
+  	<script type="text/javascript" src="../bootstrap-4.4.1/js/bootstrap.min.js"></script>
   	<style type="text/css">
   		#side_bar{
   			background-color: whitesmoke;
@@ -36,7 +34,7 @@
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="user_dashboard.php">Library Management System(LMS)</a>
+				<a class="navbar-brand" href="admin_dashboard.php">Library Management System(LMS)</a>
 			</div>
 			<font style="color: white"><span><strong>Welcome: <?php echo $_SESSION['name'];?></strong></span></font>
 			<font style="color: white"><span><strong>Email: <?php echo $_SESSION['email'];?></strong></span></font>
@@ -69,10 +67,6 @@
 				<div class="form-group">
 					<label>Mobile:</label>
 					<input type="text" class="form-control" value="<?php echo $mobile;?>" disabled>
-				</div>
-				<div class="form-group">
-					<label>Address:</label>
-					<textarea rows="3" cols="40" disabled="" class="form-control"><?php echo $address;?></textarea>
 				</div>
 			</form>
 		</div>

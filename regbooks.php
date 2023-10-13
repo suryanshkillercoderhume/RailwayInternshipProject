@@ -5,9 +5,10 @@
 	$db = mysqli_select_db($connection,"lms");
 	$book_name = "";
 	$author = "";
+	$category = "";
 	$book_no = "";
-	$student_name = "";
-	$query = "select issued_books.book_name,issued_books.book_author,issued_books.book_no,users.name from issued_books left join users on issued_books.student_id = users.id";
+	$price = "";
+	$query = "select books.book_name,books.book_no,books.book_price,authors.author_name from books left join authors on books.author_id = authors.author_id";
 ?>
 <!DOCTYPE html>
 <html>
@@ -90,22 +91,22 @@
 				<tr>
 					<th>Name:</th>
 					<th>Author:</th>
+					<th>Price:</th>
 					<th>Number:</th>
-					<th>Student Name:</th>
 				</tr>
 				<?php
 					$query_run = mysqli_query($connection,$query);
 					while($row = mysqli_fetch_assoc($query_run)){
 						$book_name = $row['book_name'];
-						$book_author = $row['book_author'];
+						$author_name = $row['author_name'];
+						$price = $row['book_price'];
 						$book_no = $row['book_no'];
-						$student_name = $row['name'];
 				?>
 						<tr>
 							<td><?php echo $book_name;?></td>
-							<td><?php echo $book_author;?></td>
+							<td><?php echo $author_name;?></td>
+							<td><?php echo $price;?></td>
 							<td><?php echo $book_no;?></td>
-							<td><?php echo $student_name;?></td>
 						</tr>
 						<?php
 					}

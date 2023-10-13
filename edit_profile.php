@@ -5,24 +5,22 @@
 	$name = "";
 	$email = "";
 	$mobile = "";
-	$address = "";
-	$query = "select * from users where email = '$_SESSION[email]'";
+	$query = "select * from admins where email = '$_SESSION[email]'";
 	$query_run = mysqli_query($connection,$query);
 	while($row = mysqli_fetch_assoc($query_run)){
 		$name = $row['name'];
 		$email = $row['email'];
 		$mobile = $row['mobile'];
-		$address = $row['address'];
 	}
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>User Dashboard</title>
+	<title>Admin Dashboard</title>
 	<meta charset="utf-8" name="viewport" content="width=device-width,intial-scale=1">
-	<link rel="stylesheet" type="text/css" href="bootstrap-4.4.1/css/bootstrap.min.css">
-  	<script type="text/javascript" src="bootstrap-4.4.1/js/juqery_latest.js"></script>
-  	<script type="text/javascript" src="bootstrap-4.4.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="../bootstrap-4.4.1/css/bootstrap.min.css">
+  	<script type="text/javascript" src="../bootstrap-4.4.1/js/juqery_latest.js"></script>
+  	<script type="text/javascript" src="../bootstrap-4.4.1/js/bootstrap.min.js"></script>
   	<style type="text/css">
   		#side_bar{
   			background-color: whitesmoke;
@@ -69,10 +67,6 @@
 				<div class="form-group">
 					<label>Mobile:</label>
 					<input type="text" class="form-control" value="<?php echo $mobile;?>" name="mobile">
-				</div>
-				<div class="form-group">
-					<label>Address:</label>
-					<textarea rows="3" cols="40" name="address" class="form-control"><?php echo $address;?></textarea>
 				</div>
 				<button  type="submit" name="update" class="btn btn-primary">Update</button>
 			</form>
