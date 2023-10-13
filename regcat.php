@@ -3,11 +3,8 @@
 	session_start();
 	$connection = mysqli_connect("localhost","root","");
 	$db = mysqli_select_db($connection,"lms");
-	$book_name = "";
-	$author = "";
-	$book_no = "";
-	$student_name = "";
-	$query = "select issued_books.book_name,issued_books.book_author,issued_books.book_no,users.name from issued_books left join users on issued_books.student_id = users.id";
+	$cat_name = "";
+	$query = "select * from category";
 ?>
 <!DOCTYPE html>
 <html>
@@ -89,23 +86,14 @@
 			<table class="table-bordered" width="900px" style="text-align: center">
 				<tr>
 					<th>Name:</th>
-					<th>Author:</th>
-					<th>Number:</th>
-					<th>Student Name:</th>
 				</tr>
 				<?php
 					$query_run = mysqli_query($connection,$query);
 					while($row = mysqli_fetch_assoc($query_run)){
-						$book_name = $row['book_name'];
-						$book_author = $row['book_author'];
-						$book_no = $row['book_no'];
-						$student_name = $row['name'];
+						$cat_name = $row['cat_name'];
 				?>
 						<tr>
-							<td><?php echo $book_name;?></td>
-							<td><?php echo $book_author;?></td>
-							<td><?php echo $book_no;?></td>
-							<td><?php echo $student_name;?></td>
+							<td><?php echo $cat_name;?></td>
 						</tr>
 						<?php
 					}

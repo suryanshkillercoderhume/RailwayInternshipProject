@@ -3,11 +3,20 @@
 	session_start();
 	$connection = mysqli_connect("localhost","root","");
 	$db = mysqli_select_db($connection,"lms");
-	$book_name = "";
-	$author = "";
 	$book_no = "";
-	$student_name = "";
-	$query = "select issued_books.book_name,issued_books.book_author,issued_books.book_no,users.name from issued_books left join users on issued_books.student_id = users.id";
+	$book_name = "";
+	$author_id = "";
+	$cat_id = "";
+	$book_price = "";
+	$query = "select * from books where book_no = $_GET[bn]";
+	$query_run = mysqli_query($connection,$query);
+	while($row = mysqli_fetch_assoc($query_run)){
+		$book_name = $row['book_name'];
+		$book_no = $row['book_no'];
+		$author_id = $row['author_id'];
+		$cat_id = $row['cat_id'];
+		$book_price = $row['book_price'];
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -56,21 +65,21 @@
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" data-toggle="dropdown">Book</a>
 				<div class="dropdown-menu">
-					<a href="" class="dropdown-item">Add New Book</a>
-					<a href="" class="dropdown-item">Manage Books</a>
+					<a href="add_book.php" class="dropdown-item">Add New Book</a>
+					<a href="manage_book.php" class="dropdown-item">Manage Books</a>
 				</div>
 			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" data-toggle="dropdown">Category</a>
 				<div class="dropdown-menu">
-					<a href="" class="dropdown-item">Add New Category</a>
+					<a href="add_cat.php" class="dropdown-item">Add New Category</a>
 					<a href="" class="dropdown-item">Manage Category</a>
 				</div>
 			</li>
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" data-toggle="dropdown">Author</a>
 				<div class="dropdown-menu">
-					<a href="" class="dropdown-item">Add New Author</a>
+					<a href="add_author.php" class="dropdown-item">Add New Author</a>
 					<a href="" class="dropdown-item">Manage Authors</a>
 				</div>
 			</li>
@@ -81,40 +90,46 @@
 	</div>
 </nav>
 
-<span><marquee>This is library Management System. Library opens at 8:00 AM and close at 8:00 PM</marquee></span><br><br>
-<div class="row">
-	<div class="col-md-2"></div>
-	<div class="col-md-8">
-		<form>
-			<table class="table-bordered" width="900px" style="text-align: center">
-				<tr>
-					<th>Name:</th>
-					<th>Author:</th>
-					<th>Number:</th>
-					<th>Student Name:</th>
-				</tr>
-				<?php
-					$query_run = mysqli_query($connection,$query);
-					while($row = mysqli_fetch_assoc($query_run)){
-						$book_name = $row['book_name'];
-						$book_author = $row['book_author'];
-						$book_no = $row['book_no'];
-						$student_name = $row['name'];
-				?>
-						<tr>
-							<td><?php echo $book_name;?></td>
-							<td><?php echo $book_author;?></td>
-							<td><?php echo $book_no;?></td>
-							<td><?php echo $student_name;?></td>
-						</tr>
-						<?php
-					}
-				?>
-			</table>
-		</form>
+	<span><marquee>This is library Management System. Library opens at 8:00 AM and close at 8:00 PM</marquee></span><br><br>
+	<div class="row">
+		<div class="col-md-4"></div>
+		<div class="col-md-4">
+			<form action="" method="post">
+				<div class="form-group">
+					<label>Book No:</label>
+					<input type="text" name="book_no" value="<?php echo $book_no;?>" class="form-control" required="">
+				</div>
+				<div class="form-group">
+					<label>Book Name:</label>
+					<input type="text" name="book_name" value="<?php echo $book_name;?>" class="form-control" required="">
+				</div>
+				<div class="form-group">
+					<label>Author ID:</label>
+					<input type="text" name="author_id" value="<?php echo $author_id;?>" class="form-control" required="">
+				</div>
+				<div class="form-group">
+					<label>Category ID:</label>
+					<input type="text" name="cat_id" value="<?php echo $cat_id;?>" class="form-control" required="">
+				</div>
+				<div class="form-group">
+					<label>Book Price:</label>
+					<input type="text" name="book_price" value="<?php echo $book_price;?>" class="form-control" required="">
+				</div>
+				<button class="btn btn-primary" name="update">Update Book</button>
+
+			</form>
+		</div>
+		<div class="col-md-4"></div>
 	</div>
-	<div class="col-md-2"></div>
-</div>
-	
 </body>
 </html>
+
+<?php
+	if(isset($_POST['update'])){
+		$connection = mysqli_connect("localhost","root","");
+		$db = mysqli_select_db($connection,"lms");
+		$query = "update books set book_name = '$_POST[book_name]',author_id=$_POST[author_id],cat_id=$_POST[cat_id],book_price = $_POST[book_price] where book_no = $_GET[bn]";
+		$query_run = mysqli_query($connection,$query);
+		header("location:manage_book.php");
+	}
+?>
